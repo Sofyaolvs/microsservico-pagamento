@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 
 const pagamentoRoutes = require('./routes/PagamentoRoutes');
-const { validarRequisicao } = require('./middlewares/validacao');
+const { validarRequisicao } = require('../src/middlewares/validacao');
 
 const app = express();
 
