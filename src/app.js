@@ -20,6 +20,55 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware de validação
 app.use(validarRequisicao);
 
+// Rota raiz - documentação da API
+app.get('/', (req, res) => {
+    res.status(200).json({
+        service: 'Microserviço de Pagamentos',
+        version: '1.0.0',
+        status: 'online',
+        timestamp: new Date().toISOString(),
+        endpoints: {
+            health: 'GET /health',
+            pagamentos: {
+                base: '/api/pagamentos',
+                criar: {
+                    credito: 'POST /api/pagamentos/cartao-credito',
+                    debito: 'POST /api/pagamentos/cartao-debito',
+                    pix: 'POST /api/pagamentos/pix'
+                },
+                gerenciar: {
+                    listar: 'GET /api/pagamentos',
+                    consultar: 'GET /api/pagamentos/:id',
+                    efetuar: 'POST /api/pagamentos/:id/efetuar',
+                    cancelar: 'POST /api/pagamentos/:id/cancelar'
+                }
+            }
+        },
+        exemplos: {
+            criarPix: {
+                method: 'POST',
+                url: '/api/pagamentos/pix',
+                body: {
+                    valor: 100.50,
+                    chavePix: 'usuario@email.com'
+                }
+            },
+            criarCredito: {
+                method: 'POST',
+                url: '/api/pagamentos/cartao-credito',
+                body: {
+                    valor: 250.00,
+                    numeroCartao: '1234567812345678',
+                    nomeTitular: 'João Silva',
+                    codigoSeguranca: '123',
+                    validade: '12/25',
+                    parcelas: 3
+                }
+            }
+        }
+    });
+});
+
 // Rota de health check
 app.get('/health', (req, res) => {
     res.status(200).json({
@@ -37,7 +86,15 @@ app.use('*', (req, res) => {
     res.status(404).json({
         erro: 'Rota não encontrada',
         metodo: req.method,
-        url: req.originalUrl
+        url: req.originalUrl,
+        rotasDisponiveis: [
+            'GET /',
+            'GET /health',
+            'GET /api/pagamentos',
+            'POST /api/pagamentos/pix',
+            'POST /api/pagamentos/cartao-credito',
+            'POST /api/pagamentos/cartao-debito'
+        ]
     });
 });
 
