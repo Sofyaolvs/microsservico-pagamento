@@ -1,0 +1,46 @@
+# Iniciar o servidor
+npm run dev
+GET http://localhost:3000/health
+
+POST http://localhost:3000/api/pagamentos/cartao-credito
+Content-Type: application/json
+
+{
+  "valor": 150.50,
+  "numeroCartao": "1234567890123456",
+  "nomeTitular": "João Silva",
+  "codigoSeguranca": "123",
+  "validade": "12/25",
+  "parcelas": 3
+}
+
+POST http://localhost:3000/api/pagamentos/cartao-debito
+Content-Type: application/json
+
+{
+  "valor": 89.90,
+  "numeroCartao": "9876543210987654",
+  "nomeTitular": "Maria Santos",
+  "codigoSeguranca": "456",
+  "banco": "Banco do Brasil"
+}
+
+POST http://localhost:3000/api/pagamentos/pix
+Content-Type: application/json
+
+{
+  "valor": 200.00,
+  "chavePix": "usuario@email.com"
+}
+
+# Efetuar pagamento
+POST http://localhost:3000/api/pagamentos/{id}/efetuar
+
+# Cancelar pagamento  
+POST http://localhost:3000/api/pagamentos/{id}/cancelar
+
+# Consultar pagamento específico
+GET http://localhost:3000/api/pagamentos/{id}
+
+# Listar todos os pagamentos
+GET http://localhost:3000/api/pagamentos
