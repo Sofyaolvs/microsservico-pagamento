@@ -44,28 +44,7 @@ app.get('/', (req, res) => {
                 }
             }
         },
-        exemplos: {
-            criarPix: {
-                method: 'POST',
-                url: '/api/pagamentos/pix',
-                body: {
-                    valor: 100.50,
-                    chavePix: 'usuario@email.com'
-                }
-            },
-            criarCredito: {
-                method: 'POST',
-                url: '/api/pagamentos/cartao-credito',
-                body: {
-                    valor: 250.00,
-                    numeroCartao: '1234567812345678',
-                    nomeTitular: 'João Silva',
-                    codigoSeguranca: '123',
-                    validade: '12/25',
-                    parcelas: 3
-                }
-            }
-        }
+        
     });
 });
 
