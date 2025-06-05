@@ -4,43 +4,39 @@ const PagamentoCartaoDebito = require('../models/PagamentoDebito');
 const PagamentoPix = require('../models/PagamentoPix');
 
 
-const pagamentos = new Map();
+const PagamentoSchema = require('../models/PagamentoSchema');
 
 class PagamentoController {
     static async criarPagamentoCartaoCredito(req, res) {
-        try {
-            const { valor, numeroCartao, nomeTitular, codigoSeguranca, validade, parcelas } = req.body;
-            
-            // Validações básicas
-            if (!valor || !numeroCartao || !nomeTitular || !codigoSeguranca || !validade) {
-                return res.status(400).json({
-                    erro: "Dados obrigatórios não fornecidos",
-                    camposObrigatorios: ["valor", "numeroCartao", "nomeTitular", "codigoSeguranca", "validade"]
-                });
-            }
-
-            const id = uuidv4();
-            const pagamento = new PagamentoCartaoCredito(
-                id, 
-                parseFloat(valor), 
-                numeroCartao, 
-                nomeTitular, 
-                codigoSeguranca, 
-                validade, 
-                parseInt(parcelas) || 1
-            );
-
-            pagamentos.set(id, pagamento);
-
-            res.status(201).json({
-                mensagem: "Pagamento criado com sucesso",
-                pagamento: pagamento.toJSON()
+    try {
+        const { valor, numeroCartao, nomeTitular, codigoSeguranca, validade, parcelas } = req.body;
+        
+        if (!valor || !numeroCartao || !nomeTitular || !codigoSeguranca || !validade) {
+            return res.status(400).json({
+                erro: "Dados obrigatórios não fornecidos",
+                camposObrigatorios: ["valor", "numeroCartao", "nomeTitular", "codigoSeguranca", "validade"]
             });
-        } catch (error) {
-            console.error("Erro ao criar pagamento com cartão de crédito:", error);
-            res.status(500).json({ erro: "Erro interno do servidor" });
         }
+
+        const pagamento = new PagamentoSchema({
+            valor: parseFloat(valor),
+            numeroCartao,
+            nomeTitular,
+            parcelas: parseInt(parcelas) || 1,
+            tipo: 'CartaoCredito'
+        });
+
+        await pagamento.save();
+
+        res.status(201).json({
+            mensagem: "Pagamento criado com sucesso",
+            pagamento
+        });
+    } catch (error) {
+        console.error("Erro ao criar pagamento:", error);
+        res.status(500).json({ erro: "Erro interno do servidor" });
     }
+}
 
     static async criarPagamentoCartaoDebito(req, res) {
         try {

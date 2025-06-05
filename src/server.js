@@ -1,5 +1,8 @@
 const app = require('./app');
+const connectDB = require('./config/database');
 
+// Conectar ao banco de dados
+connectDB();
 const PORT = process.env.PORT || 3000;
 
 // Removido HOST para compatibilidade com Render
