@@ -8,12 +8,12 @@ const PORT = process.env.PORT || 3000;
 // Removido HOST para compatibilidade com Render
 // O Render gerencia automaticamente o binding de host
 app.listen(PORT, () => {
-    console.log(`🚀 Microserviço de Pagamentos iniciado com sucesso!`);
-    console.log(`📍 Porta: ${PORT}`);
-    console.log(`🏥 Health check: /health`);
-    console.log(`🔌 API base: /api/pagamentos`);
-    console.log(`📅 Timestamp: ${new Date().toISOString()}`);
-    console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(` Microserviço de Pagamentos iniciado com sucesso!`);
+    console.log(` Porta: ${PORT}`);
+    console.log(` Health check: /health`);
+    console.log(` API base: /api/pagamentos`);
+    console.log(`Timestamp: ${new Date().toISOString()}`);
+    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
     
     // Endpoints disponíveis
     console.log('\n📋 Endpoints disponíveis:');
@@ -26,5 +26,5 @@ app.listen(PORT, () => {
     console.log('  GET  /api/pagamentos/:id - Consultar pagamento');
     console.log('  POST /api/pagamentos/:id/efetuar - Efetuar pagamento');
     console.log('  POST /api/pagamentos/:id/cancelar - Cancelar pagamento');
-    console.log('\n✅ Servidor pronto para receber requisições!');
+    console.log('\nServidor pronto para receber requisições!');
 });
