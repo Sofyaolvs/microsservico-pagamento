@@ -1,5 +1,5 @@
 const app = require('./app');
-const connectDB = require('./config/database');
+const connectDB = require('./src/config/database');
 
 // Variáveis de ambiente
 const PORT = process.env.PORT || 3000;
@@ -16,12 +16,12 @@ async function startServer() {
         
         // Iniciar o servidor
         const server = app.listen(PORT, () => {
-            console.log('\n🎉 Microserviço de Pagamentos iniciado com sucesso!');
-            console.log(`📡 Porta: ${PORT}`);
-            console.log(`🔗 URL: http://localhost:${PORT}`);
-            console.log(`⚡ Health check: http://localhost:${PORT}/health`);
-            console.log(`📋 API base: http://localhost:${PORT}/api/pagamentos`);
-            console.log(`⏰ Timestamp: ${new Date().toISOString()}`);
+            console.log('\n Microserviço de Pagamentos iniciado com sucesso!');
+            console.log(`Porta: ${PORT}`);
+            console.log(` URL: http://localhost:${PORT}`);
+            console.log(` Health check: http://localhost:${PORT}/health`);
+            console.log(` API base: http://localhost:${PORT}/api/pagamentos`);
+            console.log(` Timestamp: ${new Date().toISOString()}`);
             
             // Endpoints disponíveis
             console.log('\n📋 Endpoints disponíveis:');
@@ -34,7 +34,7 @@ async function startServer() {
             console.log('  GET  /api/pagamentos/:id - Consultar pagamento');
             console.log('  POST /api/pagamentos/:id/efetuar - Efetuar pagamento');
             console.log('  POST /api/pagamentos/:id/cancelar - Cancelar pagamento');
-            console.log('\n✅ Servidor pronto para receber requisições!\n');
+            console.log('\n Servidor pronto para receber requisições!\n');
         });
 
         // Configurar timeouts
@@ -43,7 +43,7 @@ async function startServer() {
 
         // Graceful shutdown
         const gracefulShutdown = (signal) => {
-            console.log(`\n⚠️ Sinal ${signal} recebido. Iniciando shutdown graceful...`);
+            console.log(`\nSinal ${signal} recebido. Iniciando shutdown graceful...`);
             
             server.close(() => {
                 console.log('🔌 Servidor HTTP fechado.');
@@ -57,7 +57,7 @@ async function startServer() {
 
             // Forçar saída após 30 segundos
             setTimeout(() => {
-                console.error('❌ Forçando saída após timeout.');
+                console.error('Forçando saída após timeout.');
                 process.exit(1);
             }, 30000);
         };
@@ -68,16 +68,16 @@ async function startServer() {
 
         // Tratar erros não capturados
         process.on('unhandledRejection', (reason, promise) => {
-            console.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
+            console.error(' Unhandled Rejection at:', promise, 'reason:', reason);
         });
 
         process.on('uncaughtException', (error) => {
-            console.error('❌ Uncaught Exception:', error);
+            console.error(' Uncaught Exception:', error);
             process.exit(1);
         });
 
     } catch (error) {
-        console.error('❌ Falha ao iniciar o servidor:', error);
+        console.error(' Falha ao iniciar o servidor:', error);
         process.exit(1);
     }
 }

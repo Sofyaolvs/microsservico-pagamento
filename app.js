@@ -3,8 +3,9 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
-const pagamentoRoutes = require('./routes/PagamentoRoutes');
-const { validarRequisicao } = require('./middlewares/Validacao');
+const pagamentoRoutes = require('./src/routes/PagamentoRoutes');
+const menuRoutes = require('./src/routes/MenuRoutes');
+const { validarRequisicao } = require('./src/middlewares/Validacao');
 
 const app = express();
 
@@ -29,6 +30,10 @@ app.get('/', (req, res) => {
         timestamp: new Date().toISOString(),
         endpoints: {
             health: 'GET /health',
+            menu: {
+                mostrar: 'GET /api/menu',
+                escolher: 'POST /api/menu/escolher'
+            },
             pagamentos: {
                 base: '/api/pagamentos',
                 criar: {
@@ -58,6 +63,7 @@ app.get('/health', (req, res) => {
 });
 
 // Rotas da API
+app.use('/api/menu', menuRoutes);
 app.use('/api/pagamentos', pagamentoRoutes);
 
 // Middleware para rotas não encontradas
@@ -69,6 +75,8 @@ app.use('*', (req, res) => {
         rotasDisponiveis: [
             'GET /',
             'GET /health',
+            'GET /api/menu',
+            'POST /api/menu/escolher',
             'GET /api/pagamentos',
             'POST /api/pagamentos/pix',
             'POST /api/pagamentos/cartao-credito',
