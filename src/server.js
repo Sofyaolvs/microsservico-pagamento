@@ -1,5 +1,5 @@
 const app = require('./app');
-const connectDB = require('./src/config/database');
+const connectDB = require('./config/database');
 
 // Variáveis de ambiente
 const PORT = process.env.PORT || 3000;

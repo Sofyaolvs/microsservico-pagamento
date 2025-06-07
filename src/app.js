@@ -3,9 +3,9 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
-const pagamentoRoutes = require('./src/routes/PagamentoRoutes');
-const menuRoutes = require('./src/routes/MenuRoutes');
-const { validarRequisicao } = require('./src/middlewares/Validacao');
+const pagamentoRoutes = require('./routes/PagamentoRoutes');
+const menuRoutes = require('./routes/MenuRoutes');
+const { validarRequisicao } = require('./middlewares/Validacao');
 
 const app = express();
 
