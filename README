@@ -1,46 +1,95 @@
 # Iniciar o servidor
 npm run dev
-GET http://localhost:3000/health
-
-POST http://localhost:3000/api/pagamentos/cartao-credito
+POST http://localhost:3000/api/menu/escolher
 Content-Type: application/json
 
 {
-  "valor": 150.50,
-  "numeroCartao": "1234567890123456",
-  "nomeTitular": "João Silva",
-  "codigoSeguranca": "123",
-  "validade": "12/25",
-  "parcelas": 3
+  "metodoPagamento": "pix",
+  "dadosPagamento": {
+    "valor": 150.00,
+    "chavePix": "usuario@email.com"
+  }
 }
 
-POST http://localhost:3000/api/pagamentos/cartao-debito
+4. Processar Escolha de Método (PIX)
+POST http://localhost:3000/api/menu/escolher
 Content-Type: application/json
 
 {
-  "valor": 89.90,
-  "numeroCartao": "9876543210987654",
-  "nomeTitular": "Maria Santos",
-  "codigoSeguranca": "456",
-  "banco": "Banco do Brasil"
+  "metodoPagamento": "pix",
+  "dadosPagamento": {
+    "valor": 150.00,
+    "chavePix": "usuario@email.com"
+  }
 }
+5. Processar Escolha de Método (Cartão Crédito)
+POST http://localhost:3000/api/menu/escolher
+Content-Type: application/json
 
+{
+  "metodoPagamento": "cartao-credito",
+  "dadosPagamento": {
+    "valor": 250.00,
+    "numeroCartao": "1234567812345678",
+    "nomeTitular": "João Silva",
+    "codigoSeguranca": "123",
+    "validade": "12/25",
+    "parcelas": 3
+  }
+}
+6. Processar Escolha de Método (Cartão Débito)
+POST http://localhost:3000/api/menu/escolher
+Content-Type: application/json
+
+{
+  "metodoPagamento": "cartao-debito",
+  "dadosPagamento": {
+    "valor": 80.00,
+    "numeroCartao": "9876543298765432",
+    "nomeTitular": "Maria Santos",
+    "codigoSeguranca": "456",
+    "banco": "Banco do Brasil"
+  }
+}
+7. Criar Pagamento PIX (após escolher método)
 POST http://localhost:3000/api/pagamentos/pix
 Content-Type: application/json
 
 {
-  "valor": 200.00,
-  "chavePix": "usuario@email.com"
+  "valor": 100.00,
+  "chavePix": "11999887766"
 }
+8. Criar Pagamento Cartão Crédito
+POST http://localhost:3000/api/pagamentos/cartao-credito
+Content-Type: application/json
 
-# Efetuar pagamento
-POST http://localhost:3000/api/pagamentos/{id}/efetuar
+{
+  "valor": 300.00,
+  "numeroCartao": "4532015112830366",
+  "nomeTitular": "Ana Costa",
+  "codigoSeguranca": "789",
+  "validade": "10/26",
+  "parcelas": 2
+}
+9. Criar Pagamento Cartão Débito
+POST http://localhost:3000/api/pagamentos/cartao-debito
+Content-Type: application/json
 
-# Cancelar pagamento  
-POST http://localhost:3000/api/pagamentos/{id}/cancelar
-
-# Consultar pagamento específico
-GET http://localhost:3000/api/pagamentos/{id}
-
-# Listar todos os pagamentos
+{
+  "valor": 45.50,
+  "numeroCartao": "5555444433332222",
+  "nomeTitular": "Pedro Oliveira",
+  "codigoSeguranca": "321",
+  "banco": "Itaú"
+}
+10. Listar Todos os Pagamentos
 GET http://localhost:3000/api/pagamentos
+11. Consultar Pagamento Específico
+GET http://localhost:3000/api/pagamentos/{ID_DO_PAGAMENTO}
+Substitua {ID_DO_PAGAMENTO} pelo ID retornado na criação
+12. Efetuar Pagamento
+POST http://localhost:3000/api/pagamentos/{ID_DO_PAGAMENTO}/efetuar
+Content-Type: application/json
+13. Cancelar Pagamento
+POST http://localhost:3000/api/pagamentos/{ID_DO_PAGAMENTO}/cancelar
+Content-Type: application/json
